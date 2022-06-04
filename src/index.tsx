@@ -1,8 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
+import Dashboard from './dashboard/Dashboard';
+import Explore from './explore/Explore';
+import ReadingRoom from './reading-room/ReadingRoom';
 import reportWebVitals from './reportWebVitals';
+
+const AppRoutes = () => (
+    <Routes>
+        <Route path='/' element={<App/>}>
+            <Route index element={<Dashboard/>}/>
+            <Route path='explore' element={<Explore/>}/>
+            <Route path='room' element={<ReadingRoom/>}/>
+        </Route>
+    </Routes>
+);
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -10,7 +23,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <App/>
+            <AppRoutes/>
         </BrowserRouter>
     </React.StrictMode>
 );
