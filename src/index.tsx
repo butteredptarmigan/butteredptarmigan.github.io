@@ -6,6 +6,7 @@ import Dashboard from './dashboard/Dashboard';
 import Explore from './explore/Explore';
 import ReadingRoom from './reading-room/ReadingRoom';
 import reportWebVitals from './reportWebVitals';
+import './index.scss';
 
 const AppRoutes = () => (
     <Routes>

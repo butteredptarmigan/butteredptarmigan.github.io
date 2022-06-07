@@ -1,0 +1,13 @@
+@import '~normalize.css';
+
+html,
+body {
+    min-height: 100vh;
+}
+
+body,
+#root {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}

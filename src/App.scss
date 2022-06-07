@@ -1,0 +1,53 @@
+@use 'styles/theme';
+@use 'styles/reset';
+
+@include theme.apply();
+
+.App {
+    display: flex;
+    flex-grow: 1;
+    justify-content: stretch;
+
+    .App-aside {
+        flex-basis: 12.5vw;
+        flex-shrink: 0;
+        background-color: var(--theme-darker);
+        color: var(--theme-lighter);
+
+        > header {
+            padding-right: 1rem;
+            padding-left: 1rem;
+        }
+
+        .App-title {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 1.5rem 0 1.33rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .App-nav {
+            a {
+                @include reset.link();
+
+                display: block;
+                padding: 0.75rem 1rem;
+                background-color: var(--theme-dark);
+
+                & + a {
+                    margin-top: 0.75rem;
+                }
+            }
+        }
+    }
+
+    .Tab {
+        flex-grow: 1;
+        background-color: var(--theme-lighter);
+
+        > * {
+            padding: 1rem;
+        }
+    }
+}
