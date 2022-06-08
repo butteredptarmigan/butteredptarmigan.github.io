@@ -6,6 +6,8 @@ import { getBooks } from '../api/book';
 import { withSearchParams, withOutletContext } from '../utils/router-utils';
 import Tab from '../Tab';
 import { SearchInput } from './SearchInput';
+import Book from '../book/Book';
+import Toolbar from '../book/Toolbar';
 
 type ExploreProps = {
     searchParams: any,
@@ -70,15 +72,13 @@ class Explore extends React.Component<ExploreProps, ExploreState> {
                 />
                 <ul>
                     {this.state.books.map(book => (
-                        <li key={book.id}>
-                            <h4>{book.title}</h4>
-                            <span hidden={!favorites.includes(book.id)}>
-                                FAV!
-                            </span>
-                            <button onClick={() => favorites.toggle(book.id)}>
-                                fav
-                            </button>
-                        </li>
+                        <Book {...book}>
+                            <Toolbar
+                                isFavorite={favorites.includes(book.id)}
+                                favoriteAction={() => favorites.toggle(book.id)}
+                                readAction={() => console.log(`Read ${book.id}`) /* TODO */}
+                            />
+                        </Book>
                     ))}
                 </ul>
             </Tab>

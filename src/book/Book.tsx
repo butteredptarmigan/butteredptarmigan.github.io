@@ -2,12 +2,13 @@ import { ElementType } from 'react';
 import { Book as BookInterface } from '../api/types';
 import { getCover } from '../api/book';
 
-type BookProps = {
+export type BookProps = React.PropsWithChildren<{
     as?: ElementType
-} & BookInterface;
+} & BookInterface>;
 
 const Book = ({ as: Tag = 'div', ...$ }: BookProps) => (
     <Tag>
+        {$.children}
         <div>
             <img src={getCover($)} />
         </div>
