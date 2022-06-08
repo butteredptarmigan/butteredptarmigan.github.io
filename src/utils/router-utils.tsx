@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useOutletContext, useSearchParams } from 'react-router-dom';
 
 export const withSearchParams = (Component: any) => {
     return ($: React.ComponentProps<any>) => {
@@ -14,3 +14,12 @@ export const withSearchParams = (Component: any) => {
         );
     };
 };
+
+export const withOutletContext = (Component: any) => {
+    return ($: React.ComponentProps<any>) => (
+        <Component
+            {...$}
+            {...useOutletContext()}
+        />
+    );
+}

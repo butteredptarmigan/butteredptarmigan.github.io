@@ -1,15 +1,16 @@
 import React from 'react';
 import { Book as BookInterface, ResponseData } from '../api/types';
-import { getBooks } from '../api/book';
+import { StorageOperator } from '../storage/Storage';
 import { Fetcher } from './Fetcher';
-import { withSearchParams } from '../utils/router-utils';
-import { SearchInput } from './SearchInput';
+import { getBooks } from '../api/book';
+import { withSearchParams, withOutletContext } from '../utils/router-utils';
 import Tab from '../Tab';
+import { SearchInput } from './SearchInput';
 
 type ExploreProps = {
     searchParams: any,
-    setSearchParams: Function
-}
+    setSearchParams: Function,
+} & StorageOperator;
 
 type ExploreState = {
     books: BookInterface[],
@@ -47,6 +48,8 @@ class Explore extends React.Component<ExploreProps, ExploreState> {
     }
 
     render() {
+        const { favorites } = this.props;
+
         if (!this.state.books) {
             //TODO
             console.log(this.query
@@ -69,6 +72,12 @@ class Explore extends React.Component<ExploreProps, ExploreState> {
                     {this.state.books.map(book => (
                         <li key={book.id}>
                             <h4>{book.title}</h4>
+                            <span hidden={!favorites.includes(book.id)}>
+                                FAV!
+                            </span>
+                            <button onClick={() => favorites.toggle(book.id)}>
+                                fav
+                            </button>
                         </li>
                     ))}
                 </ul>
@@ -87,11 +96,10 @@ class Explore extends React.Component<ExploreProps, ExploreState> {
     }
 
     updateBooks(data?: ResponseData<BookInterface>) {
-        console.log(data); //TODO
         this.setState({
             books: data ? getBooks(data) : []
         });
     }
 }
 
-export default withSearchParams(Explore);
+export default withOutletContext(withSearchParams(Explore));
