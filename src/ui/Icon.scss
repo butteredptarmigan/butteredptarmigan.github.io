@@ -1,0 +1,12 @@
+.material-symbols-rounded {
+    --material-symbol-fill: 0;
+    --material-symbol-weight: 400;
+    --material-symbol-grad: 0;
+    --material-symbol-opsize: 48;
+
+    font-variation-settings:
+        'FILL' var(--material-symbol-fill),
+        'wght' var(--material-symbol-weight),
+        'GRAD' var(--material-symbol-grad),
+        'opsz' var(--material-symbol-opsize);
+}
