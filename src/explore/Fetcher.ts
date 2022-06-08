@@ -37,4 +37,11 @@ export class Fetcher<T> {
             return new Promise(() => undefined);
         }
     }
+
+    async search(query: string) {
+        const url = this.url + '?search=' + query;
+        const data = await this.fetch(url);
+
+        return data;
+    }
 }
