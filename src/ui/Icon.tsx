@@ -1,7 +1,11 @@
+import React from 'react';
+import classNames from 'classnames';
 import './Icon.scss';
 
-const Icon = ($: any) => (
-    <i className='material-symbols-rounded'>
+type IconProps = React.HTMLProps<HTMLElement>;
+
+const Icon = ($: IconProps) => (
+    <i className={classNames('material-symbols-rounded', $.className)}>
         {$.children}
     </i>
 );

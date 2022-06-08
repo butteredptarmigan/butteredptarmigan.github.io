@@ -10,3 +10,16 @@
         'GRAD' var(--material-symbol-grad),
         'opsz' var(--material-symbol-opsize);
 }
+
+.Icon {
+    margin-top: 1px;
+    margin-bottom: -1px;
+
+    &.Icon-filled {
+        --material-symbol-fill: 1;
+    }
+
+    &.Icon-thick {
+        --material-symbol-weight: 800;
+    }
+}
