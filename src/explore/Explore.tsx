@@ -1,33 +1,29 @@
 import React from 'react';
 import { Book as BookInterface, ResponseData } from '../api/types';
 import { getBooks } from '../api/book';
+import { Fetcher } from './Fetcher';
 import Tab from '../Tab';
 
-class Explore extends React.Component<{}, {data: ResponseData<BookInterface>, books: BookInterface[]}> {
+type ExploreState = {
+    books: BookInterface[],
+    favorites: Array<number>
+}
+
+class Explore extends React.Component<{}, ExploreState> {
+    private fetcher: Fetcher<BookInterface>;
+
     constructor(props: {}) {
         super(props);
         this.state = {
-            data: {
-                count: 0,
-                results: []
-            },
-            books: []
+            books: [],
+            favorites: []
         }
+        this.fetcher = new Fetcher('book'); //REF Dependency Injection
     }
 
     async componentDidMount() {
         try {
-            const response = await fetch('https://gnikdroy.pythonanywhere.com/api/book/');
-
-            const data = await response.json();
-            const books = getBooks(data);
-
-            console.log(books); //TODO
-            
-            this.setState({
-                data: data,
-                books: books
-            });
+            this.fetch();
         } catch (error) {
             console.log(error); //TODO
         }
@@ -46,6 +42,17 @@ class Explore extends React.Component<{}, {data: ResponseData<BookInterface>, bo
                 </ul>
             </Tab>
         );
+    }
+
+    async fetch() {
+        const data = await this.fetcher.fetch();
+        this.updateBooks(data);
+    }
+
+    updateBooks(data?: ResponseData<BookInterface>) {
+        this.setState({
+            books: data ? getBooks(data) : []
+        });
     }
 }
 
