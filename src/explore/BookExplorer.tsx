@@ -52,13 +52,15 @@ const BookExplorer = ($: any) => {
                             : 'Loading books...'}
                       </Loading>
                     : books.map((book: BookInterface) => (
-                        <Book {...book}>
-                            <Toolbar
-                                isFavorite={$.favorites.includes(book.id)}
-                                favoriteAction={() => $.favorites.toggle(book.id)}
-                                readAction={() => console.log(`Read ${book.id}`) /* TODO */}
-                            />
-                        </Book>
+                        <li key={book.id} className='container'>
+                            <Book {...book}>
+                                <Toolbar
+                                    isFavorite={$.favorites.includes(book.id)}
+                                    favoriteAction={() => $.favorites.toggle(book.id)}
+                                    readAction={() => console.log(`Read ${book.id}`) /* TODO */}
+                                />
+                            </Book>
+                        </li>
                       ))
                 }
             </ul>

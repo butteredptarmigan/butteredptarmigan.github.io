@@ -1,6 +1,10 @@
 @use '../styles/reset';
 
 .BookExplorer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
     > ul {
         & > li {
             @include reset.list();
@@ -8,10 +12,19 @@
     }
 
     &-books {
+        flex-grow: 1;
         display: flex;
         flex-wrap: wrap;
-        gap: 1.5rem max(5%, 1.75rem);
+        gap: 1.75rem max(5%, 2.75rem);
         justify-content: center;
-        padding: 0 var(--tab-padding-horizontal, 1rem);
+        align-items: center;
+        margin: 1rem auto;
+        padding:
+            max(2.5%, var(--tab-padding-horizontal))
+            max(var(--tab-padding-horizontal, 1rem), 7.5%);
+
+        > .container {
+            flex-basis: 15%;
+        }
     }
 }

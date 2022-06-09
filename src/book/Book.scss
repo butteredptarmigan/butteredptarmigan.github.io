@@ -1,3 +1,5 @@
+@use 'sass:color';
+@use '../styles/theme';
 @use '../styles/reset';
 
 @mixin shadow {
@@ -10,7 +12,7 @@
         bottom: 0;
         right: 0;
         left: 0;
-        z-index: 1;
+        z-index: 3;
         box-shadow: 9px 0 0.2rem -0.3rem #00000017 inset;
     }
 }
@@ -35,7 +37,31 @@
             width: 9.125rem; //REF
             height: 13rem;
             object-fit: cover;
+            z-index: 2;
+
+            &:not([src])  {
+                visibility: hidden;
+            }
         }
+    }
+
+    &-information {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        z-index: 1;
+        padding: 1.25rem;
+        text-align: center;
+
+        background-color: var(--theme-lighter);
+        color: color.adjust(theme.$silver, $lightness: -33);
+    }
+
+    &-title {
+        margin: 0.66em;
+        font-size: 1.5rem;
     }
 
     //REF some styles of the toolbar should be extracted to its component

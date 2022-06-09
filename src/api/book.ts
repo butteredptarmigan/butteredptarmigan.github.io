@@ -12,7 +12,12 @@ export function getAuthor(data: BookInterface) {
 
     if (Array.isArray(agents)) {
         try {
-            return agents.find(agent => agent?.type == 'Author')?.person;
+            const author = agents.find(agent => agent?.type == 'Author')?.person;
+            const parts = author
+                ?.split(', ')
+                .reverse()
+                .join(' ');
+            return parts;
         } catch (error) { }
     }
 
