@@ -1,5 +1,8 @@
+import classNames from "classnames";
+import './Tab.scss';
+
 const Tab = ($: any) => (
-    <main>
+    <main className={classNames('Tab', $.className)}>
         {$.children}
     </main>
 );
