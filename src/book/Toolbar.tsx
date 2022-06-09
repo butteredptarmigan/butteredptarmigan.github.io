@@ -11,7 +11,7 @@ type ToolbarProps = {
 };
 
 const Toolbar = ($: ToolbarProps) => (
-    <div>
+    <div className='Toolbar'>
         <button onClick={$.favoriteAction}>
             <I className={classNames('Icon', { 'Icon-filled': $.isFavorite })}>
                 favorite
