@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import I from '../ui/Icon';
+import './SearchInput.scss';
 
 export const SearchInput = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -11,7 +13,7 @@ export const SearchInput = () => {
     }
 
     return (
-        <>
+        <div className='SearchInput'>
             <input
                 type='search'
                 value={value}
@@ -25,8 +27,8 @@ export const SearchInput = () => {
                     }
                 }} />
             <button onClick={() => setQuery(value)}>
-                search
+                <I>search</I>
             </button>
-        </>
+        </div>
     );
 };

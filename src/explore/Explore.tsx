@@ -16,8 +16,10 @@ const Explore = () => {
 
     return (
         <Tab className='Explore'>
-            <h1>Explore</h1>
-            <SearchInput/>
+            <header className='Explore-header'>
+                <h1>Explore</h1>
+                <SearchInput/>
+            </header>
             <BookExplorer
                 fetcher={fetcher}
                 favorites={context.favorites}

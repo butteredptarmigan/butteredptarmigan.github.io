@@ -1,0 +1,51 @@
+@use 'sass:color';
+@use '../styles/reset';
+@use '../styles/theme';
+
+.SearchInput {
+    display: flex;
+    background-color: color.adjust(theme.$clouds, $lightness: 10); //REF
+    border-radius: 40px; //REF
+
+    > * {
+        padding: 1rem;
+        background-color: transparent;
+    }
+
+    > input[type=search] {
+        @include reset.input();
+        
+        flex-basis: 75%;
+
+        &:focus,
+        &:active {
+            border: none;
+            outline: none;
+        }
+    }
+
+    > button {
+        @include reset.button();
+
+        flex-basis: 25%;
+
+        //REF
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5%;
+            bottom: 5%;
+            width: 1px;
+            background-color: var(--theme-light);
+            border-radius: 50%;
+        }
+    }
+}
