@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-type SearchInputProps = {
-    query?: string,
-    setQuery: Function
-};
+export const SearchInput = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get('query');
+    let [value, setValue] = useState(query ? query : '');
 
-export const SearchInput = ($: SearchInputProps) => {
-    let [value, setValue] = useState($.query ? $.query : '');
+    const setQuery = (query?: string) => {
+        setSearchParams(query ? { query } : {});
+    }
 
     return (
         <>
@@ -19,10 +21,10 @@ export const SearchInput = ($: SearchInputProps) => {
                         // onKeyUp event fires before onChange
                         // so the value must be obtained directly and not from the state
                         const value = (event.target as HTMLInputElement).value;
-                        $.setQuery(value);
+                        setQuery(value);
                     }
                 }} />
-            <button onClick={() => $.setQuery(value)}>
+            <button onClick={() => setQuery(value)}>
                 search
             </button>
         </>

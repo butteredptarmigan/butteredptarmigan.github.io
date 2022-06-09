@@ -31,10 +31,8 @@ export class Fetcher<T> {
 
             return data;
         } catch (error) {
-            console.log(error);
-
             //TODO throw an appriopriate exception
-            return new Promise(() => undefined);
+            console.log(error);
         }
     }
 
