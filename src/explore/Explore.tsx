@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Book as BookInterface } from '../api/types';
 import { StorageOperator } from '../storage/Storage';
 import { Fetcher } from './Fetcher';
-import { useOutletContext } from 'react-router-dom';
+import { Link, Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../Tab';
 import { SearchInput } from './SearchInput';
-import BookExplorer from './BookExplorer';
+import I from '../ui/Icon';
 import './Explore.scss';
 
-//TODO
-const fetcher = new Fetcher('book');
+const ShowFavorites = () => (
+    <Link to='/explore/favorites' className='ShowFavorites'>
+        <I>favorite</I>
+    </Link>
+);
 
 const Explore = () => {
-    const context: { favorites: StorageOperator } = useOutletContext();
+    const [fetcher] = useState(() => new Fetcher('book'));
+    const { favorites } = useOutletContext<{favorites: StorageOperator}>();
 
     return (
         <Tab className='Explore'>
             <header className='Explore-header'>
+                <ShowFavorites/>
                 <h1>Explore</h1>
                 <SearchInput/>
             </header>
-            <BookExplorer
-                fetcher={fetcher}
-                favorites={context.favorites}
-            />
+            <Outlet context={{ fetcher, favorites }}/>
         </Tab>
     );
 }

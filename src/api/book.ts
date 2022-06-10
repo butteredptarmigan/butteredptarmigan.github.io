@@ -1,11 +1,4 @@
-import {
-    Book as BookInterface,
-    ResponseData
-} from "./types";
-
-export function getBooks(data: ResponseData<BookInterface>) {
-    return data.results;
-}
+import { Book as BookInterface } from "./types";
 
 export function getAuthor(data: BookInterface) {
     const agents = data.agents;

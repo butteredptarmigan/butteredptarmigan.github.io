@@ -1,47 +1,70 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Book as BookInterface, ResponseData } from '../api/types';
-import { getBooks } from '../api/book';
+import React, { useState, useEffect } from 'react';
+import { useOutletContext, useSearchParams } from 'react-router-dom';
+import { Fetcher } from './Fetcher';
+import { StorageOperator } from '../storage/Storage';
+import { Book as BookInterface } from '../api/types';
 import Book from '../book/Book';
 import Toolbar from '../book/Toolbar';
 import './BookExplorer.scss';
-import { Fetcher } from './Fetcher';
 
 const Loading = ($: React.PropsWithChildren<any>) => (
-    <div>{$.children}</div>
+    <div className='Loading'>
+        {$.children}
+    </div>
 );
 
+const Empty = ($: React.PropsWithChildren<any>) => (
+    <div className='Empty'>
+        {$.children}
+    </div>
+);
+
+type BookExplorerProps = {
+    showFavorites?: boolean
+};
+
+type BookExplorerContext = {
+    favorites: StorageOperator,
+    fetcher: Fetcher<BookInterface>
+}
+
 //TODO type
-const BookExplorer = ($: any) => {
+const BookExplorer = ($: BookExplorerProps) => {
+    const { favorites, fetcher } = useOutletContext<BookExplorerContext>();
     const [loading, setLoading] = useState(false);
     const [books, setBooks]: [BookInterface[], Function] = useState([]);
-    const [searchParams, _setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const query = searchParams.get('query');
 
-    const updateBooks = (data: ResponseData<BookInterface>) => {
-        const books = getBooks(data);
-        setBooks(books);
-    }
-
-    const loadBooks = async (fn: () => Promise<ResponseData<BookInterface>>) => {
+    const loadBooks = async (fn: () => Promise<any>) => {
         setLoading(true);
-        updateBooks(await fn());
+        setBooks(await fn());
         setLoading(false);
     }
 
     const fetch = async () => loadBooks(
-        async () => await $.fetcher.fetch()
+        async () => await fetcher.fetch()
     );
 
-    const search = async (query?: string) => loadBooks(
-        async () => await $.fetcher.search(query)
+    const search = async (query: string) => loadBooks(
+        async () => await fetcher.search(query)
+    );
+
+    const fetchFavorites = async () => loadBooks(
+        async () => await fetcher.fetchCollection(
+            Object.keys(favorites.items)
+        )
     );
 
     useEffect(() => {
+        if ($.showFavorites) {
+            fetchFavorites();
+            return;
+        }
         query ? search(query) : fetch()
-    }, [query]);
+    }, [query, $.showFavorites]);
 
-    //TODO format
+    //TODO format and refactor this spaghetti monster
     return (
         <section className='BookExplorer'>
             <ul className='BookExplorer-books'>
@@ -51,17 +74,23 @@ const BookExplorer = ($: any) => {
                             ? 'Our bookworms are searching...'
                             : 'Loading books...'}
                       </Loading>
-                    : books.map((book: BookInterface) => (
-                        <li key={book.id} className='container'>
-                            <Book {...book}>
-                                <Toolbar
-                                    isFavorite={$.favorites.includes(book.id)}
-                                    favoriteAction={() => $.favorites.toggle(book.id)}
-                                    readAction={() => console.log(`Read ${book.id}`) /* TODO */}
-                                />
-                            </Book>
-                        </li>
-                      ))
+                    : books && books.length
+                        ? books.map((book: BookInterface) => (
+                            <li key={book.id} className='container'>
+                                <Book {...book}>
+                                    <Toolbar
+                                        isFavorite={favorites.includes(book.id)}
+                                        favoriteAction={() => favorites.toggle(book.id)}
+                                        readAction={() => console.log(`Read ${book.id}`) /* TODO */}
+                                    />
+                                </Book>
+                            </li>
+                          ))
+                        : <Empty>
+                            {$.showFavorites
+                                ? 'There are no books here yet. Mark books as favourite and get back to them easily using this tab.'
+                                : 'Something went wrong. Plase try again soon.'}
+                          </Empty>
                 }
             </ul>
         </section>

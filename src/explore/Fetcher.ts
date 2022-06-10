@@ -1,33 +1,26 @@
-import { ResponseData } from '../api/types';
-
 export class Fetcher<T> {
     protected root = 'https://gnikdroy.pythonanywhere.com/api/';
-    //TODO
     protected resource: string;
-    protected next?: string;
-    protected prev?: string;
     protected count?: number;
-    protected results?: Array<T>;
     protected limit?: number;
-    protected data: ResponseData<T>;
+    protected results?: Array<T>;
 
     constructor(resource: string) {
         this.resource = resource;
-        this.data = {
-            count: 0,
-            results: []
-        };
     }
 
-    public get url(): string {
+    get url(): string {
         return this.root + this.resource;
     }
 
-
-    async fetch(url?: string): Promise<ResponseData<T> | undefined> {
+    protected async doFetch(url: string, unpack=true) {
         try {
-            const response = await fetch(url ? url : this.url);
+            const response = await fetch(url);
             const data = await response.json();
+
+            if (unpack) {
+                return data.results;
+            }
 
             return data;
         } catch (error) {
@@ -36,10 +29,28 @@ export class Fetcher<T> {
         }
     }
 
+    async fetch(): Promise<T[] | undefined> {
+        return await this.doFetch(this.url);
+    }
+
     async search(query: string) {
         const url = this.url + '?search=' + query;
-        const data = await this.fetch(url);
+        return await this.doFetch(url);
+    }
 
-        return data;
+    async fetchOne(id: number | string) {
+        const url = this.url + '/' + id;
+        return await this.doFetch(url, false);
+    }
+
+    async fetchCollection(ids: number[] | string[]) {
+        const promises = ids.map(
+            (id) => this.fetchOne(id)
+        );
+        const settled = await Promise.allSettled(promises);
+        const collection = settled.map(
+            (promise) => 'value' in promise ? promise.value : undefined
+        );
+        return collection;
     }
 }
