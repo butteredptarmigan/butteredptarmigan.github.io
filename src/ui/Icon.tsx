@@ -2,10 +2,19 @@ import React from 'react';
 import classNames from 'classnames';
 import './Icon.scss';
 
-type IconProps = React.HTMLProps<HTMLElement>;
+type IconProps = {
+    filled?: boolean
+} & React.HTMLProps<HTMLElement>;
 
 const Icon = ($: IconProps) => (
-    <i className={classNames('material-symbols-rounded', $.className)}>
+    <i
+        className={classNames(
+            'material-symbols-rounded',
+            'Icon',
+            { 'Icon-filled': $.filled },
+            $.className
+        )}
+    >
         {$.children}
     </i>
 );
