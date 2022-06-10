@@ -13,8 +13,16 @@ export class Fetcher<T> {
         return this.root + this.resource;
     }
 
-    protected async doFetch(url: string, unpack=true) {
+    protected async doFetch(
+        url: string,
+        { page=undefined, unpack=true }: { page?: number, unpack?: boolean } = {}
+    ) {
         try {
+            console.log(page);
+            if (page !== undefined) {
+                url += '?page=' + page;
+            }
+
             const response = await fetch(url);
             const data = await response.json();
 
@@ -29,18 +37,23 @@ export class Fetcher<T> {
         }
     }
 
-    async fetch(): Promise<T[] | undefined> {
-        return await this.doFetch(this.url);
+    async fetch(
+        { page: page=undefined }: { page?: number } = {}
+    ): Promise<T[] | undefined> {
+        return await this.doFetch(this.url, { page });
     }
 
-    async search(query: string) {
+    async search(
+        query: string,
+        { page: page=undefined }: { page?: number } = {}
+    ): Promise<T[] | undefined> {
         const url = this.url + '?search=' + query;
-        return await this.doFetch(url);
+        return await this.doFetch(url, { page });
     }
 
-    async fetchOne(id: number | string) {
+    async fetchOne(id: number | string): Promise<T | undefined> {
         const url = this.url + '/' + id;
-        return await this.doFetch(url, false);
+        return await this.doFetch(url, { unpack: false });
     }
 
     async fetchCollection(ids: number[] | string[]) {
