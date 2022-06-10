@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import I from '../ui/Icon';
 import './SearchInput.scss';
 
-export const SearchInput = () => {
+const SearchInput = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('query');
     let [value, setValue] = useState(query ? query : '');
@@ -32,3 +32,5 @@ export const SearchInput = () => {
         </div>
     );
 };
+
+export default SearchInput;

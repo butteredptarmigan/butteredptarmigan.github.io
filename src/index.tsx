@@ -12,8 +12,7 @@ const AppRoutes = () => (
     <Routes>
         <Route path='/' element={<App/>}>
             <Route index element={<Dashboard/>}/>
-            <Route path='explore/*' element={<Explore/>}>
-            </Route>
+            <Route path='explore/*' element={<Explore/>}/>
             <Route path='room/*' element={<ReadingRoom/>}/>
         </Route>
     </Routes>

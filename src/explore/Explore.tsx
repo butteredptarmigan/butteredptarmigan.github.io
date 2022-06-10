@@ -4,8 +4,8 @@ import { Book as BookInterface } from '../api/types';
 import { StorageOperator } from '../storage/Storage';
 import { Fetcher } from './Fetcher';
 import Tab from '../Tab';
-import { SearchInput } from './SearchInput';
-import { ShowFavorites } from './ShowFavorites';
+import SearchInput from './SearchInput';
+import ShowFavorites from './ShowFavorites';
 import BookExplorer from './BookExplorer';
 import './Explore.scss';
 

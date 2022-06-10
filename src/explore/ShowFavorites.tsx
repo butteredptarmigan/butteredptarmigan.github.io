@@ -2,7 +2,7 @@ import { NavLink, useMatch } from 'react-router-dom';
 import I from '../ui/Icon';
 import './ShowFavorites.scss';
 
-export const ShowFavorites = () => {
+const ShowFavorites = () => {
     const active = useMatch('/explore/favorites');
 
     return (
@@ -16,3 +16,5 @@ export const ShowFavorites = () => {
         </NavLink>
     );
 };
+
+export default ShowFavorites;
