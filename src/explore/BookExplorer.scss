@@ -4,6 +4,9 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    //REF this is because of the toolbar's width
+    //REF this value should be obtained from a variable to reflect that
+    margin-left: -1.66rem;
 
     > ul {
         & > li {
@@ -19,9 +22,7 @@
         justify-content: center;
         align-items: center;
         margin: 1rem auto;
-        padding:
-            max(2.5%, var(--tab-padding-horizontal))
-            max(var(--tab-padding-horizontal, 1rem), 7.5%);
+        padding: max(2.5%, var(--tab-padding-horizontal));
 
         > .container {
             flex-basis: 15%;

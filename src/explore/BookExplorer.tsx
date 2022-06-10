@@ -28,7 +28,6 @@ type BookExplorerContext = {
     fetcher: Fetcher<BookInterface>
 }
 
-//TODO type
 const BookExplorer = ($: BookExplorerProps) => {
     const { favorites, fetcher } = useOutletContext<BookExplorerContext>();
     const [loading, setLoading] = useState(false);
