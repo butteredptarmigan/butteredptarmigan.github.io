@@ -1,0 +1,29 @@
+@mixin paragraph() {
+    margin: 0;
+}
+
+@mixin heading() {
+    @include paragraph();
+}
+
+@mixin link() {
+    text-decoration: none;
+    color: inherit;
+}
+
+@mixin list() {
+    padding: 0;
+    list-style: none;
+}
+
+@mixin input() {
+    font-family: inherit;
+    border: none;
+    border-radius: 0;
+}
+
+@mixin button() {
+    @include input();
+    color: inherit;
+    font-size: inherit;
+}
