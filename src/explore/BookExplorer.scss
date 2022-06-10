@@ -8,6 +8,18 @@
     //REF this value should be obtained from a variable to reflect that
     margin-left: -1.66rem;
 
+    //REF generalize
+    //REF compute layout properly without hacky adjustments
+    .Filler {
+        &.Empty p {
+            margin-left: -6.5%;
+        }
+
+        &.Loading p {
+            margin-left: -38.5%;
+        }
+    }
+
     > ul {
         & > li {
             @include reset.list();

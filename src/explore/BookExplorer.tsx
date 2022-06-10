@@ -3,20 +3,30 @@ import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { Fetcher } from './Fetcher';
 import { StorageOperator } from '../storage/Storage';
 import { Book as BookInterface } from '../api/types';
+import classNames from 'classnames';
 import Book from '../book/Book';
 import Toolbar from '../book/Toolbar';
 import './BookExplorer.scss';
 
-const Loading = ($: React.PropsWithChildren<any>) => (
-    <div className='Loading'>
-        {$.children}
+type FillerProps = React.PropsWithChildren<any>;
+
+//REF generalize
+const Filler = ($: FillerProps) => (
+    <div className={classNames('Filler', $.className)}>
+        <p>{$.children}</p>
     </div>
+)
+
+const Loading = ($: FillerProps) => (
+    <Filler className='Loading'>
+        {$.children}
+    </Filler>
 );
 
-const Empty = ($: React.PropsWithChildren<any>) => (
-    <div className='Empty'>
+const Empty = ($: FillerProps) => (
+    <Filler className='Empty'>
         {$.children}
-    </div>
+    </Filler>
 );
 
 type BookExplorerProps = {
