@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { Route, Routes, useOutletContext } from 'react-router-dom';
+import { Book as BookInterface } from '../api/types';
 import { StorageOperator } from '../storage/Storage';
 import { Fetcher } from './Fetcher';
-import { Outlet, useOutletContext } from 'react-router-dom';
 import Tab from '../Tab';
 import { SearchInput } from './SearchInput';
-import './Explore.scss';
 import { ShowFavorites } from './ShowFavorites';
+import BookExplorer from './BookExplorer';
+import './Explore.scss';
 
 type ContainerType = Partial<React.ReactHTMLElement<HTMLDivElement>>;
 
@@ -14,8 +16,9 @@ const Container = ($: React.PropsWithChildren<ContainerType>) => (
 );
 
 const Explore = () => {
-    const [fetcher] = useState(() => new Fetcher('book'));
+    const [fetcher] = useState(() => new Fetcher<BookInterface>('book'));
     const { favorites } = useOutletContext<{favorites: StorageOperator}>();
+    const explorerProps = { fetcher, favorites };
 
     return (
         <Tab className='Explore'>
@@ -31,7 +34,10 @@ const Explore = () => {
                         </Container>
                     </Container>
                 </header>
-                <Outlet context={{ fetcher, favorites }}/>
+                <Routes>
+                    <Route index element={<BookExplorer {...explorerProps}/>}/>
+                    <Route path='favorites' element={<BookExplorer showFavorites {...explorerProps}/>}/>
+                </Routes>
             </Container>
         </Tab>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useOutletContext, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { Fetcher } from './Fetcher';
 import { StorageOperator } from '../storage/Storage';
 import { Book as BookInterface } from '../api/types';
@@ -30,16 +30,13 @@ const Empty = ($: FillerProps) => (
 );
 
 type BookExplorerProps = {
+    favorites: StorageOperator,
+    fetcher: Fetcher<BookInterface>,
     showFavorites?: boolean
 };
 
-type BookExplorerContext = {
-    favorites: StorageOperator,
-    fetcher: Fetcher<BookInterface>
-}
-
 const BookExplorer = ($: BookExplorerProps) => {
-    const { favorites, fetcher } = useOutletContext<BookExplorerContext>();
+    const { favorites, fetcher } = $;
     const [loading, setLoading] = useState(false);
     const [books, setBooks]: [BookInterface[], Function] = useState([]);
     const [searchParams] = useSearchParams();
