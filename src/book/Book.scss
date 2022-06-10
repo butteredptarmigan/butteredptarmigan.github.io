@@ -1,0 +1,76 @@
+@use '../styles/reset';
+
+@mixin shadow {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 1;
+        box-shadow: 9px 0 0.2rem -0.3rem #00000017 inset;
+    }
+}
+
+.Book {
+    position: relative;
+    display: flex;
+    width: 9.125rem; //REF
+    cursor: pointer;
+
+    > .container {
+        @include shadow;
+
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 0.25rem 0.125rem 0.125rem 0.25rem;
+        box-shadow: 1rem 1rem 4.25rem -7px #0000008f,
+                    0 0.75rem 1.25rem -14px #0000002e;
+
+        > img {
+            width: 9.125rem; //REF
+            height: 13rem;
+            object-fit: cover;
+        }
+    }
+
+    //REF some styles of the toolbar should be extracted to its component
+    > .Toolbar {
+        --toolbar-width: 1.66rem;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: var(--toolbar-width);
+        overflow: hidden;
+        background-color: #fefefe;
+        border-radius: 0 3px 3px 0;
+        box-shadow: 2px 5px 0.5rem -0.25rem rgba(0, 0, 0, 0.315);
+        // in case it's animated in the future
+        transform: translateX(calc(1 * var(--toolbar-width)));
+
+        > button {
+            @include reset.button();
+            
+            padding: 0;
+            background-color: transparent;
+            padding: 2px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            + button {
+                padding-top: 0;
+            }
+        }
+    }
+}

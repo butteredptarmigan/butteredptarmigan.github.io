@@ -4,8 +4,13 @@
 //REF All font variations are downloaded in order to play with them freely during development
 //REF but as it becomes clear that some of them are redundant, they should be restricted to a reasonable range
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @include theme.apply();
+
+.App {
+    font-family: 'PT Sans', sans-serif;
+}
 
 .App {
     display: flex;
@@ -43,15 +48,6 @@
                     margin-top: 0.75rem;
                 }
             }
-        }
-    }
-
-    .Tab {
-        flex-grow: 1;
-        background-color: var(--theme-lighter);
-
-        > * {
-            padding: 1rem;
         }
     }
 }

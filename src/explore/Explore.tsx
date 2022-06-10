@@ -8,6 +8,7 @@ import Tab from '../Tab';
 import { SearchInput } from './SearchInput';
 import Book from '../book/Book';
 import Toolbar from '../book/Toolbar';
+import './Explore.scss';
 
 type ExploreProps = {
     searchParams: any,
@@ -70,7 +71,7 @@ class Explore extends React.Component<ExploreProps, ExploreState> {
                         this.search(query);
                     }}
                 />
-                <ul>
+                <ul className='books'>
                     {this.state.books.map(book => (
                         <Book {...book}>
                             <Toolbar
