@@ -52,16 +52,20 @@
         left: 0px;
         right: 0px;
         z-index: 1;
-        padding: 1.25rem;
+        padding: 1.25rem 1rem;
         text-align: center;
 
         background-color: var(--theme-lighter);
         color: color.adjust(theme.$silver, $lightness: -33);
     }
 
+    &-author {
+        font-size: 0.8rem;
+    }
+
     &-title {
-        margin: 0.66em;
-        font-size: 1.5rem;
+        margin: 0.5em 0;
+        font-size: 1.2rem;
     }
 
     //REF some styles of the toolbar should be extracted to its component
