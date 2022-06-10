@@ -1,0 +1,13 @@
+@use '../styles/reset';
+
+.ShowFavorites {
+    @include reset.link();
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: white;
+    color: crimson;
+    border-radius: 50%;
+}
