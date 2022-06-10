@@ -4,6 +4,7 @@ import { Book as BookInterface } from '../api/types';
 import { getResource } from '../api/book';
 import { Fetcher } from '../api/Fetcher';
 import Tab from '../Tab';
+import './ReadingRoom.scss';
 
 const ReadingRoom = () => {
     return (
