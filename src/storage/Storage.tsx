@@ -3,6 +3,7 @@ import { useState } from 'react';
 export type StorageObject = { [key: number]: number; };
 
 export type StorageOperator = {
+    orderedItems: number[];
     items: Storage;
     add: Function;
     remove: Function;
@@ -48,7 +49,12 @@ const DatewiseStorage = ($: any) => {
             : add(item);
     };
 
+    const orderedItems = Object.entries(storage)
+        .sort(([,a], [,b]) => b - a)
+        .map(([a, b]) => a);
+
     const operator = {
+        orderedItems: Object.seal(orderedItems),
         items: Object.seal(storage),
         add,
         remove,

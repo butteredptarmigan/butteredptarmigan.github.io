@@ -19,7 +19,8 @@ const Container = ($: React.PropsWithChildren<ContainerType>) => (
 const Explore = () => {
     const [fetcher] = useState(() => new Fetcher<BookInterface>('book'));
     const { favorites } = useOutletContext<{favorites: StorageOperator}>();
-    const explorerProps = { fetcher, favorites };
+    const [showPagination, setPaginationVisibility] = useState(false);
+    const explorerProps = { fetcher, favorites, setPaginationVisibility };
 
     return (
         <Tab className='Explore'>
@@ -43,7 +44,9 @@ const Explore = () => {
                     </Route>
                     <Route path=':page' element={<BookExplorer {...explorerProps}/>}/>
                 </Routes>
-                <Pagination count={10}/>
+                {showPagination
+                    ? <Pagination count={10}/>
+                    : null}
             </Container>
         </Tab>
     );
