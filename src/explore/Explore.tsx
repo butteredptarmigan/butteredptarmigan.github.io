@@ -7,6 +7,7 @@ import Tab from '../Tab';
 import SearchInput from './SearchInput';
 import ShowFavorites from './ShowFavorites';
 import BookExplorer from './BookExplorer';
+import Pagination from '../pagination/Pagination';
 import './Explore.scss';
 
 type ContainerType = Partial<React.ReactHTMLElement<HTMLDivElement>>;
@@ -42,6 +43,7 @@ const Explore = () => {
                     </Route>
                     <Route path=':page' element={<BookExplorer {...explorerProps}/>}/>
                 </Routes>
+                <Pagination count={10}/>
             </Container>
         </Tab>
     );
