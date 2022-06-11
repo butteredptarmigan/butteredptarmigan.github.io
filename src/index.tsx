@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
 import Dashboard from './dashboard/Dashboard';
 import Explore from './explore/Explore';
@@ -30,9 +30,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <BrowserRouter>
+        <HashRouter>
             <AppRoutes/>
-        </BrowserRouter>
+        </HashRouter>
     </React.StrictMode>
 );
 
