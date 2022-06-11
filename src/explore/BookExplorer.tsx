@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Fetcher } from '../api/Fetcher';
 import { StorageOperator } from '../storage/Storage';
 import { Book as BookInterface } from '../api/types';
@@ -22,6 +22,7 @@ const BookExplorer = ($: BookExplorerProps) => {
     const { page } = useParams();
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query');
+    const navigate = useNavigate();
 
     const loadBooks = async (fn: () => Promise<any>) => {
         setLoading(true);
@@ -84,7 +85,7 @@ const BookExplorer = ($: BookExplorerProps) => {
                         <Toolbar
                             isFavorite={favorites.includes(book.id)}
                             favoriteAction={() => favorites.toggle(book.id)}
-                            readAction={() => console.log(`Read ${book.id}`) /* TODO */}
+                            readAction={() => navigate(`/room/${book.id}`)}
                         />
                     </Book>
                 </li>
