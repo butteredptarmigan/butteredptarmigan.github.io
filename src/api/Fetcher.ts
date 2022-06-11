@@ -56,14 +56,24 @@ export class Fetcher<T> {
         return await this.doFetch(url, { unpack: false });
     }
 
-    async fetchCollection(ids: number[] | string[]) {
-        const promises = ids.map(
+    async fetchCollection(
+        ids: number[] | string[],
+        { page: page=undefined, limit: limit=10 }: { page?: number, limit?: number } = {}
+    ) {
+        const [start, end] =
+            (page === undefined)
+                ? [0, limit - 1]
+                : [page * limit, (page + 1) * limit - 1];
+        const identifiers = ids.slice(start, end);
+
+        const promises = identifiers.map(
             (id) => this.fetchOne(id)
         );
         const settled = await Promise.allSettled(promises);
         const collection = settled.map(
             (promise) => 'value' in promise ? promise.value : undefined
         );
+        
         return collection;
     }
 }
