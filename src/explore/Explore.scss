@@ -14,7 +14,13 @@
 
     > .container {
         flex-basis: 50%;
-        padding: 1rem max(var(--tab-padding-horizontal, 1rem), 7.5%);
+        padding: 0.75rem max(var(--tab-padding-horizontal, 1rem), 7.5%) 1.25rem;
+        
+        //REF this is because of the toolbar's width
+        //REF this value should be obtained from a variable to reflect that
+        //REF in the future, the toolbar will probably be hidden anyway
+        margin-left: -1.5rem;
+        margin-right: 1.5rem;
     }
 
     &-header {
@@ -29,7 +35,7 @@
             flex-grow: 1;
 
             > * {
-                flex-basis: 15%;
+                flex-basis: 33%;
                 flex-grow: 0;
 
                 &:nth-child(2) {
@@ -53,6 +59,7 @@
         text-align: center;
         font-size: 2rem;
         margin-bottom: 0.775em;
+        margin-left: -0.5rem; //REF attempt to visually balance this row
     }
 
     .Pagination {
