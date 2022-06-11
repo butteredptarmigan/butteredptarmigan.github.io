@@ -1,33 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Fetcher } from './Fetcher';
 import { StorageOperator } from '../storage/Storage';
 import { Book as BookInterface } from '../api/types';
-import classNames from 'classnames';
 import Book from '../book/Book';
 import Toolbar from '../book/Toolbar';
+import { Loading, Empty } from '../ui/Filler';
 import './BookExplorer.scss';
-
-type FillerProps = React.PropsWithChildren<any>;
-
-//REF generalize
-const Filler = ($: FillerProps) => (
-    <div className={classNames('Filler', $.className)}>
-        <p>{$.children}</p>
-    </div>
-)
-
-const Loading = ($: FillerProps) => (
-    <Filler className='Loading'>
-        {$.children}
-    </Filler>
-);
-
-const Empty = ($: FillerProps) => (
-    <Filler className='Empty'>
-        {$.children}
-    </Filler>
-);
 
 type BookExplorerProps = {
     favorites: StorageOperator,
@@ -70,34 +49,46 @@ const BookExplorer = ($: BookExplorerProps) => {
         query ? search(query) : fetch()
     }, [query, $.showFavorites]);
 
-    //TODO format and refactor this spaghetti monster
+    const LoadingFiller = () => (
+        <Loading>
+            {query
+                ? 'Our bookworms are searching...'
+                : 'Loading books...'}
+        </Loading>
+    );
+
+    const EmptyFiller = () => (
+        <Empty>
+            {$.showFavorites
+                ? 'There are no books here yet. Mark books as favourite and get back to them easily using this tab.'
+                : 'Something went wrong. Plase try again soon.'}
+        </Empty> 
+    );
+
+    const Books = () => (
+        <>
+            {books.map((book: BookInterface) => (
+                <li key={book.id} className='container'>
+                    <Book {...book}>
+                        <Toolbar
+                            isFavorite={favorites.includes(book.id)}
+                            favoriteAction={() => favorites.toggle(book.id)}
+                            readAction={() => console.log(`Read ${book.id}`) /* TODO */}
+                        />
+                    </Book>
+                </li>
+            ))}
+        </>
+    );
+
     return (
         <section className='BookExplorer'>
             <ul className='BookExplorer-books'>
                 {loading
-                    ? <Loading>
-                        {query
-                            ? 'Our bookworms are searching...'
-                            : 'Loading books...'}
-                      </Loading>
+                    ? <LoadingFiller/>
                     : books && books.length
-                        ? books.map((book: BookInterface) => (
-                            <li key={book.id} className='container'>
-                                <Book {...book}>
-                                    <Toolbar
-                                        isFavorite={favorites.includes(book.id)}
-                                        favoriteAction={() => favorites.toggle(book.id)}
-                                        readAction={() => console.log(`Read ${book.id}`) /* TODO */}
-                                    />
-                                </Book>
-                            </li>
-                          ))
-                        : <Empty>
-                            {$.showFavorites
-                                ? 'There are no books here yet. Mark books as favourite and get back to them easily using this tab.'
-                                : 'Something went wrong. Plase try again soon.'}
-                          </Empty>
-                }
+                        ? <Books/>
+                        : <EmptyFiller/>}
             </ul>
         </section>
     );
