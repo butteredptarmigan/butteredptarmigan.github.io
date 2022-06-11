@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Route, Routes, useOutletContext } from 'react-router-dom';
 import { Book as BookInterface } from '../api/types';
 import { StorageOperator } from '../storage/Storage';
-import { Fetcher } from './Fetcher';
+import { Fetcher } from '../api/Fetcher';
 import Tab from '../Tab';
 import SearchInput from './SearchInput';
 import ShowFavorites from './ShowFavorites';
