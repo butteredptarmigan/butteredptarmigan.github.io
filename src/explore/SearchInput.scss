@@ -1,11 +1,12 @@
 @use 'sass:color';
 @use '../styles/reset';
 @use '../styles/theme';
+@use '../styles/feature';
 
 .SearchInput {
+    @extend %feature;
+
     display: flex;
-    background-color: color.adjust(theme.$clouds, $lightness: 10); //REF
-    border-radius: 40px; //REF
 
     > * {
         padding: 1rem;
@@ -27,25 +28,14 @@
     > button {
         @include reset.button();
 
-        flex-basis: 25%;
+        --divider-color: var(--theme-light);
 
-        //REF
-        position: relative;
+        @extend %divider-proprietor;
+
+        flex-basis: 25%;
         display: flex;
         justify-content: center;
         align-items: center;
-
         cursor: pointer;
-
-        &::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 5%;
-            bottom: 5%;
-            width: 1px;
-            background-color: var(--theme-light);
-            border-radius: 50%;
-        }
     }
 }
