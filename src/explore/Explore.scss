@@ -1,3 +1,5 @@
+@use '../styles/feature';
+
 .Explore {
     --tab-padding-horizontal: 2.5rem;
 
@@ -51,5 +53,33 @@
         text-align: center;
         font-size: 2rem;
         margin-bottom: 0.775em;
+    }
+
+    .Pagination {
+        @extend %feature;
+
+        width: max-content;
+        margin: auto;
+
+        > * {
+            --divider-color: var(--theme-lighter);
+
+            @extend %divider-proprietor;
+
+            padding: 1rem 0.75rem;
+            background-color: transparent; //REF move to feature module
+
+            &:first-child {
+                padding-left: 1rem;
+
+                &::before {
+                    display: none;
+                }
+            }
+
+            &:last-child {
+                padding-right: 1rem;
+            }
+        }
     }
 }
