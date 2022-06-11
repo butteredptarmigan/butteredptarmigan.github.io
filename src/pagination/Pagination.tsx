@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import './Pagination.scss';
 
 type PaginationProps = {
     root?: string,
