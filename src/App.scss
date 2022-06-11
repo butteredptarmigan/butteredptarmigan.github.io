@@ -1,5 +1,6 @@
 @use 'styles/theme';
 @use 'styles/reset';
+@use 'ui/filler';
 
 //REF All font variations are downloaded in order to play with them freely during development
 //REF but as it becomes clear that some of them are redundant, they should be restricted to a reasonable range
@@ -47,7 +48,34 @@
                 & + a {
                     margin-top: 0.75rem;
                 }
+
+                &[aria-current=page] {
+                    position: relative;
+
+                    &::before {
+                        --decoration-size: 2px;
+
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        width: var(--decoration-size);
+                        background-color: white;
+                    }
+                }
             }
+        }
+    }
+
+    .Error {
+        @extend %tab-empty;
+
+        .Empty {
+            @extend %tab-empty-filler;
+
+            align-items: center;
+            justify-content: center;
         }
     }
 }

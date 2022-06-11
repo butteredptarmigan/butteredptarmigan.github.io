@@ -17,6 +17,12 @@ const Dashboard = () => (
                         <li>Mark books as favorite (although they are not persisted to local storage yet)</li>
                     </ul>
                 </p>
+                <p className="instructions">
+                    You can disable network connection or trigger 404 error to see how it responds.
+                </p>
+                <p className='instructions'>
+                    Unfortunately, it's not particularly responsive or mobile-fiendly yet.
+                </p>
             </span>
         </Filler>
     </Tab>

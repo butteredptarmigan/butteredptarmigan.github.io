@@ -5,6 +5,8 @@ import App from './App';
 import Dashboard from './dashboard/Dashboard';
 import Explore from './explore/Explore';
 import ReadingRoom from './reading-room/ReadingRoom';
+import Tab from './Tab';
+import { Empty } from './ui/Filler';
 import reportWebVitals from './reportWebVitals';
 import './index.scss';
 
@@ -14,6 +16,11 @@ const AppRoutes = () => (
             <Route index element={<Dashboard/>}/>
             <Route path='explore/*' element={<Explore/>}/>
             <Route path='room/*' element={<ReadingRoom/>}/>
+            <Route path='*' element={
+                <Tab className='Error'>
+                    <Empty>404! There is nothing here.</Empty>
+                </Tab>}
+            />
         </Route>
     </Routes>
 );

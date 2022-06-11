@@ -1,6 +1,15 @@
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, NavLinkProps, Outlet } from 'react-router-dom';
 import DatewiseStorage, { StorageOperator } from './storage/Storage';
 import './App.scss';
+
+const TabLink = ($: NavLinkProps) => (
+    <NavLink
+        {...$}
+        className={(isActive) => isActive ? 'TabLink-active' : ''}
+    >
+        {$.children}
+    </NavLink>
+);
 
 const App = () => (
     <div className='App'>
@@ -9,9 +18,9 @@ const App = () => (
                 <h1 className='App-title'>Gutenberg reader</h1>
             </header>
             <nav className='App-nav'>
-                <Link to='/'>Dashboard</Link>
-                <Link to='/explore'>Explore</Link>
-                <Link to='/room'>Reading room</Link>
+                <TabLink to='/' end>Dashboard</TabLink>
+                <TabLink to='/explore'>Explore</TabLink>
+                <TabLink to='/room'>Reading room</TabLink>
             </nav>
         </aside>
         <DatewiseStorage>
