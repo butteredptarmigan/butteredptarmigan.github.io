@@ -1,0 +1,11 @@
+.ReadingRoom {
+    display: flex;
+    padding: 0;
+    background-color: white;
+
+    > iframe {
+        padding: 0;
+        border: none;
+        flex-grow: 1;
+    }
+}
