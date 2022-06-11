@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Fetcher } from '../api/Fetcher';
 import { StorageOperator } from '../storage/Storage';
 import { Book as BookInterface } from '../api/types';
@@ -18,6 +18,7 @@ const BookExplorer = ($: BookExplorerProps) => {
     const { favorites, fetcher } = $;
     const [loading, setLoading] = useState(false);
     const [books, setBooks]: [BookInterface[], Function] = useState([]);
+    const { page } = useParams();
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query');
 
@@ -27,8 +28,10 @@ const BookExplorer = ($: BookExplorerProps) => {
         setLoading(false);
     }
 
-    const fetch = async () => loadBooks(
-        async () => await fetcher.fetch()
+    const fetch = async (page?: string) => loadBooks(
+        async () => await fetcher.fetch({
+            page: page ? Number(page) : undefined
+        })
     );
 
     const search = async (query: string) => loadBooks(
@@ -46,8 +49,8 @@ const BookExplorer = ($: BookExplorerProps) => {
             fetchFavorites();
             return;
         }
-        query ? search(query) : fetch()
-    }, [query, $.showFavorites]);
+        query ? search(query) : fetch(page)
+    }, [page, query, $.showFavorites]);
 
     const LoadingFiller = () => (
         <Loading>

@@ -36,7 +36,11 @@ const Explore = () => {
                 </header>
                 <Routes>
                     <Route index element={<BookExplorer {...explorerProps}/>}/>
-                    <Route path='favorites' element={<BookExplorer showFavorites {...explorerProps}/>}/>
+                    <Route path='favorites'>
+                        <Route index element={<BookExplorer showFavorites {...explorerProps}/>}/>
+                        <Route path=':page' element={<BookExplorer showFavorites {...explorerProps}/>}/>
+                    </Route>
+                    <Route path=':page' element={<BookExplorer {...explorerProps}/>}/>
                 </Routes>
             </Container>
         </Tab>
