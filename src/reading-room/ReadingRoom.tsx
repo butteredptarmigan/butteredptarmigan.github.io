@@ -4,13 +4,14 @@ import { Book as BookInterface } from '../api/types';
 import { getResource } from '../api/book';
 import { Fetcher } from '../api/Fetcher';
 import Tab from '../Tab';
+import { Empty } from '../ui/Filler';
 import './ReadingRoom.scss';
 
 const ReadingRoom = () => {
     return (
         <Tab className='ReadingRoom'>
             <Routes>
-                <Route index element={<div>Select a book using the Explore tab and read it here.</div>}/>
+                <Route index element={<Empty>Select a book using the Explore tab and read it here.</Empty>}/>
                 <Route path=':bookId' element={<Reader/>}/>
             </Routes>
         </Tab>

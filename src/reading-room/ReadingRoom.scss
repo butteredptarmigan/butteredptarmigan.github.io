@@ -1,3 +1,5 @@
+@use '../ui/filler';
+
 .ReadingRoom {
     display: flex;
     padding: 0;
@@ -7,5 +9,12 @@
         padding: 0;
         border: none;
         flex-grow: 1;
+    }
+
+    .Empty {
+        @extend %tab-empty-filler;
+
+        align-items: center;
+        justify-content: center;
     }
 }

@@ -5,19 +5,19 @@ type FillerProps = React.PropsWithChildren<any>;
 
 export const Filler = ($: FillerProps) => (
     <div className={classNames('Filler', $.className)}>
-        <p>{$.children}</p>
+        {$.children}
     </div>
 )
 
 export const Loading = ($: FillerProps) => (
     <Filler className='Loading'>
-        {$.children}
+        <p>{$.children}</p>
     </Filler>
 );
 
 export const Empty = ($: FillerProps) => (
     <Filler className='Empty'>
-        {$.children}
+        <p>{$.children}</p>
     </Filler>
 );
 

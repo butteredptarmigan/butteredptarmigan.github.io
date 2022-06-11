@@ -1,0 +1,28 @@
+@use '../ui/filler';
+
+.Dashboard {
+    @extend %tab-empty;
+
+    .Filler {
+        @extend %tab-empty-filler;
+
+        padding: 2rem;
+        margin: auto;
+
+        p {
+            text-align: start;
+        }
+
+        p.instructions {
+            margin-top: 0.75em;
+            font-size: 0.75em;
+            text-align: start;
+        }
+
+        ul {
+            margin-top: 0.5em;
+            padding: 0 1.5rem;
+            list-style-type: '– ';
+        }
+    }
+}
