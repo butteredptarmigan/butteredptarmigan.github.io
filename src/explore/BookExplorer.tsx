@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Fetcher } from '../api/Fetcher';
 import { StorageOperator } from '../storage/Storage';
 import { Book as BookInterface } from '../api/types';
@@ -11,13 +11,15 @@ import './BookExplorer.scss';
 type BookExplorerProps = {
     favorites: StorageOperator,
     fetcher: Fetcher<BookInterface>,
-    showFavorites?: boolean
+    showFavorites?: boolean,
+    setPaginationVisibility: Function
 };
 
 const BookExplorer = ($: BookExplorerProps) => {
     const { favorites, fetcher } = $;
     const [loading, setLoading] = useState(false);
     const [books, setBooks]: [BookInterface[], Function] = useState([]);
+    const { page } = useParams();
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query');
 
@@ -27,27 +29,36 @@ const BookExplorer = ($: BookExplorerProps) => {
         setLoading(false);
     }
 
-    const fetch = async () => loadBooks(
-        async () => await fetcher.fetch()
+    const fetch = async (page?: number) => loadBooks(
+        async () => await fetcher.fetch({ page })
     );
 
     const search = async (query: string) => loadBooks(
         async () => await fetcher.search(query)
     );
 
-    const fetchFavorites = async () => loadBooks(
+    const fetchFavorites = async (page?: number) => loadBooks(
         async () => await fetcher.fetchCollection(
-            Object.keys(favorites.items)
+            favorites.orderedItems,
+            { page }
         )
     );
 
     useEffect(() => {
+        const pageNumber = page ? Number(page) : undefined;
+
         if ($.showFavorites) {
-            fetchFavorites();
+            fetchFavorites(pageNumber);
             return;
         }
-        query ? search(query) : fetch()
-    }, [query, $.showFavorites]);
+        query ? search(query) : fetch(pageNumber);
+    }, [page, query, $.showFavorites]);
+
+    const hasBooks = books && books.length;
+
+    useEffect(() => {
+        $.setPaginationVisibility(hasBooks);
+    }, [hasBooks]);
 
     const LoadingFiller = () => (
         <Loading>
@@ -86,7 +97,7 @@ const BookExplorer = ($: BookExplorerProps) => {
             <ul className='BookExplorer-books'>
                 {loading
                     ? <LoadingFiller/>
-                    : books && books.length
+                    : hasBooks
                         ? <Books/>
                         : <EmptyFiller/>}
             </ul>

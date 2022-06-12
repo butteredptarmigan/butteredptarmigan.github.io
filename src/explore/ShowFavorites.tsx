@@ -3,7 +3,7 @@ import I from '../ui/Icon';
 import './ShowFavorites.scss';
 
 const ShowFavorites = () => {
-    const active = useMatch('/explore/favorites');
+    const active = useMatch('/explore/favorites/*');
 
     return (
         <NavLink

@@ -7,6 +7,7 @@ import Tab from '../Tab';
 import SearchInput from './SearchInput';
 import ShowFavorites from './ShowFavorites';
 import BookExplorer from './BookExplorer';
+import Pagination from '../pagination/Pagination';
 import './Explore.scss';
 
 type ContainerType = Partial<React.ReactHTMLElement<HTMLDivElement>>;
@@ -18,7 +19,8 @@ const Container = ($: React.PropsWithChildren<ContainerType>) => (
 const Explore = () => {
     const [fetcher] = useState(() => new Fetcher<BookInterface>('book'));
     const { favorites } = useOutletContext<{favorites: StorageOperator}>();
-    const explorerProps = { fetcher, favorites };
+    const [showPagination, setPaginationVisibility] = useState(false);
+    const explorerProps = { fetcher, favorites, setPaginationVisibility };
 
     return (
         <Tab className='Explore'>
@@ -36,8 +38,15 @@ const Explore = () => {
                 </header>
                 <Routes>
                     <Route index element={<BookExplorer {...explorerProps}/>}/>
-                    <Route path='favorites' element={<BookExplorer showFavorites {...explorerProps}/>}/>
+                    <Route path='favorites'>
+                        <Route index element={<BookExplorer showFavorites {...explorerProps}/>}/>
+                        <Route path=':page' element={<BookExplorer showFavorites {...explorerProps}/>}/>
+                    </Route>
+                    <Route path=':page' element={<BookExplorer {...explorerProps}/>}/>
                 </Routes>
+                {showPagination
+                    ? <Pagination count={10}/>
+                    : null}
             </Container>
         </Tab>
     );
